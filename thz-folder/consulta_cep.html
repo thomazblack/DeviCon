@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta um cep </title>
+</head>
+<body>
+
+ <input id="input_cep" type="text" placeholder="Digite um cep">
+
+ <button onclick="consulta()"> Consulta</button>
+
+ <div id="retorna"> </div>
+    
+</body>
+</html>
+<script>
+    function consulta(){
+        var cep = input_cep.value;
+        console.log(cep);
+
+        fetch(`https://viacep.com.br/ws/${cep}/json/`  ,{
+            method: "GET",
+            mode: "cors"
+        } ).then(function (resposta){
+            resposta.json().then(function (data){
+                console.log(data);
+                retorna.innerHTML=`
+                bairro:  ${data.bairro} <br/>
+                logradouro:  ${data.logradouro}<br>
+                cep:  ${data.cep}<br>
+                ibge:  ${data.ibge}<br>
+                localidade:  ${data.localidade}<br>
+                UF:  ${data.uf}<br>
+
+
+                
+                `
+            })
+            console.log(resposta);
+
+        }).catch(function(erro){
+            console.log(erro);
+
+        })
+    }
+
+</script>
